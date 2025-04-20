@@ -230,7 +230,7 @@ MonoBehaviour:
   blackKey: {fileID: 2100662320}
   whiteKey: {fileID: 1222414299}
   content: {fileID: 1154535600}
-  numberOfOctaves: 5
+  numberOfOctaves: 3
 --- !u!1 &1143847664
 GameObject:
   m_ObjectHideFlags: 0
