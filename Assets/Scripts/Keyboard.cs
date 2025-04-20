@@ -100,14 +100,14 @@ public class Keyboard : MonoBehaviour
     }
 
     private int getBlackKeyIndex(int i){
-        int actualNote = 0;
+        int actualNote = 1;
         if(i == 1){
             actualNote = 3;
         } else if(i == 2){
             actualNote = 6;
         } else if(i == 3){
             actualNote = 8;
-        } 
+        }
         return actualNote;
     }
 
