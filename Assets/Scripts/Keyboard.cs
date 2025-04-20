@@ -66,10 +66,13 @@ public class Keyboard : MonoBehaviour
 
     public void keyOn(int noteNumber){
         Debug.Log("Key Clicked: " + noteNumber);
+        GameObject.Find("SoundGeneration").GetComponent<SoundGeneration>().OnKey(noteNumber);
     }
 
     public void keyOff(int noteNumber){
         Debug.Log("Key Released: " + noteNumber);
+        GameObject.Find("SoundGeneration").GetComponent<SoundGeneration>().onKeyOff(noteNumber);
+
     }
 
     private GameObject instantiateNote(GameObject note, int actualNoteIndex, int startingNote){
