@@ -26,7 +26,7 @@ public class AuthManager : MonoBehaviour
     public TextMeshProUGUI feedbackTextRegister;
 
     [Header("Navigation (Optional)")]
-    public string sceneToLoadOnSuccess = "MainMenu"; // Example: Name of the scene to load after successful login/register
+    public string sceneToLoadOnSuccess = "MainMenuScene"; // Example: Name of the scene to load after successful login/register
 
     void Start()
     {
@@ -58,22 +58,20 @@ public class AuthManager : MonoBehaviour
             Debug.LogWarning("SwitchToLoginButton is not assigned in the AuthManager inspector.");
         }
         
-        // You might need to add Button components to your TextMeshProUGUI objects 
-        // or create separate invisible buttons over them to make the text clickable.
     }
 
     public void SwitchToLoginPanel()
     {
         loginPanel.SetActive(true);
         registerPanel.SetActive(false);
-        ClearFeedback(); // Clear any previous messages
+        ClearFeedback();
     }
 
     public void SwitchToRegisterPanel()
     {
         loginPanel.SetActive(false);
         registerPanel.SetActive(true);
-        ClearFeedback(); // Clear any previous messages
+        ClearFeedback();
     }
 
     private void AttemptLogin()
@@ -88,7 +86,7 @@ public class AuthManager : MonoBehaviour
             return;
         }
 
-        SetInteractable(false); // Disable buttons during request
+        SetInteractable(false);
         ApiService.Instance.Login(username, password, OnLoginSuccess, ShowLoginError);
     }
 
@@ -111,29 +109,32 @@ public class AuthManager : MonoBehaviour
             return;
         }
 
-        SetInteractable(false); // Disable buttons during request
+        SetInteractable(false);
         ApiService.Instance.Register(username, password, OnRegisterSuccess, ShowRegisterError);
     }
 
-    // --- Callbacks for ApiService ---
 
     private void OnLoginSuccess(AuthResponse response)
     {
-        SetInteractable(true); // Re-enable buttons
-        feedbackTextLogin.color = Color.green; // Use green for success
+        SetInteractable(true);
+        feedbackTextLogin.color = Color.green;
         feedbackTextLogin.text = $"Login Successful! Welcome {response.user?.username ?? "User"}!";
         Debug.Log("Login Successful. Token: " + response.token);
         
-        // Optional: Navigate to another scene after a short delay
-        // StartCoroutine(LoadNextSceneAfterDelay(1.5f)); 
-        
-        // Or load immediately:
-        // SceneManager.LoadScene(sceneToLoadOnSuccess);
+
+        if (!string.IsNullOrEmpty(sceneToLoadOnSuccess))
+        {
+            SceneManager.LoadScene(sceneToLoadOnSuccess);
+        }
+        else
+        {
+            Debug.LogWarning("SceneToLoadOnSuccess is not set in the AuthManager inspector.");
+        }
     }
 
      private void ShowLoginError(string message)
     {
-        SetInteractable(true); // Re-enable buttons
+        SetInteractable(true);
         feedbackTextLogin.color = Color.red;
         feedbackTextLogin.text = "Login Failed: " + message;
         Debug.LogError("Login Error: " + message);
@@ -141,24 +142,29 @@ public class AuthManager : MonoBehaviour
 
     private void OnRegisterSuccess(AuthResponse response)
     {
-        SetInteractable(true); // Re-enable buttons
+        SetInteractable(true);
         feedbackTextRegister.color = Color.green;
         feedbackTextRegister.text = "Registration Successful! You can now log in.";
         Debug.Log("Registration Successful.");
 
-        // Optionally switch back to login panel automatically
-        // SwitchToLoginPanel(); 
+        if (!string.IsNullOrEmpty(sceneToLoadOnSuccess))
+        {
+            SceneManager.LoadScene(sceneToLoadOnSuccess);
+        }
+        else
+        {
+            Debug.LogWarning("SceneToLoadOnSuccess is not set in the AuthManager inspector.");
+        }
     }
 
     private void ShowRegisterError(string message)
     {
-        SetInteractable(true); // Re-enable buttons
+        SetInteractable(true);
         feedbackTextRegister.color = Color.red;
         feedbackTextRegister.text = "Registration Failed: " + message;
         Debug.LogError("Registration Error: " + message);
     }
 
-    // --- Helper Methods ---
 
     private void ClearFeedback()
     {
@@ -170,21 +176,5 @@ public class AuthManager : MonoBehaviour
     {
         loginButton.interactable = isInteractable;
         registerButton.interactable = isInteractable;
-        // Add other elements you want to disable during requests if needed
     }
-    
-    // Optional: Coroutine for delayed scene loading
-    /*
-    private System.Collections.IEnumerator LoadNextSceneAfterDelay(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        if (!string.IsNullOrEmpty(sceneToLoadOnSuccess))
-        {
-            SceneManager.LoadScene(sceneToLoadOnSuccess);
-        }
-        else {
-            Debug.LogWarning("No scene specified to load on success.");
-        }
-    }
-    */
 } 

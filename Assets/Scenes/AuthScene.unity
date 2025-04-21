@@ -4006,7 +4006,7 @@ MonoBehaviour:
   confirmPasswordInputRegister: {fileID: 2045878213}
   registerButton: {fileID: 878519108}
   feedbackTextRegister: {fileID: 122764389}
-  sceneToLoadOnSuccess: MainMenu
+  sceneToLoadOnSuccess: MainMenuScene
 --- !u!4 &1764936516
 Transform:
   m_ObjectHideFlags: 0
