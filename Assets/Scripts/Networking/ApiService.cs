@@ -152,9 +152,9 @@ public class ApiService : MonoBehaviour
     }
 
 
-    public void Register(string firstName, string lastName, string email, string password, Action<AuthResponse> onSuccess, Action<string> onError)
+    public void Register(string username, string password, Action<AuthResponse> onSuccess, Action<string> onError)
     {
-        RegisterRequest data = new RegisterRequest { firstName = firstName, lastName = lastName, email = email, password = password };
+        RegisterRequest data = new RegisterRequest { username = username, password = password };
         string jsonBody = JsonUtility.ToJson(data);
         RequestHelper options = GetRequestOptions(body: jsonBody);
         options.Uri = baseUrl + "/api/auth/register";
@@ -174,9 +174,9 @@ public class ApiService : MonoBehaviour
         }).Catch(err => HandleError(err, onError));
     }
 
-    public void Login(string email, string password, Action<AuthResponse> onSuccess, Action<string> onError)
+    public void Login(string username, string password, Action<AuthResponse> onSuccess, Action<string> onError)
     {
-        LoginRequest data = new LoginRequest { email = email, password = password };
+        LoginRequest data = new LoginRequest { username = username, password = password };
         string jsonBody = JsonUtility.ToJson(data);
         RequestHelper options = GetRequestOptions(body: jsonBody);
         options.Uri = baseUrl + "/api/auth/login";

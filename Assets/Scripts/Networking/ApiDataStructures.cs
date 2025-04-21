@@ -1,21 +1,21 @@
 using System;
-
+using System.Collections.Generic; // Needed for List<T>
 
 namespace ApiData
 {
+    // --- Request Structures ---
+
     [Serializable]
     public class RegisterRequest
     {
-        public string firstName;
-        public string lastName;
-        public string email;
+        public string username;
         public string password;
     }
 
     [Serializable]
     public class LoginRequest
     {
-        public string email;
+        public string username;
         public string password;
     }
 
@@ -28,26 +28,12 @@ namespace ApiData
     }
 
     [Serializable]
-    public class UserData
-    {
-        public int userId;
-        public string firstName;
-        public string lastName;
-        public string email;
-        public int skillLevel;
-        public string accountStatus;
-        public string creationDate;
-        public int points;
-    }
-
-    [Serializable]
     public class UserProfileUpdateRequest
     {
         public string firstName;
         public string lastName;
-        public int? skillLevel;
+        public string email;
     }
-
 
     [Serializable]
     public class SongData
@@ -81,8 +67,9 @@ namespace ApiData
     [Serializable]
     public class ProgressUpdateRequest
     {
-        public string completionStatus;
-        public float? accuracyScore;
+        public float? highestScore;
+        public float? completionPercentage;
+        public string lastCheckpoint;
     }
 
     [Serializable]
@@ -123,5 +110,17 @@ namespace ApiData
     public class ErrorResponse
     {
         public string message;
+    }
+
+    [Serializable]
+    public class UserData
+    {
+        public int userId;
+        public string username;
+        public string email;
+        public int skillLevel;
+        public string accountStatus;
+        public string creationDate;
+        public int points;
     }
 } 
