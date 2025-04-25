@@ -60,10 +60,8 @@ namespace ApiData
     {
         public int userId;
         public string username;
-        public string email;
         public int skillLevel;
         public string accountStatus;
         public string creationDate;
-        public int points;
     }
 } 

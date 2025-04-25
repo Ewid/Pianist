@@ -53,7 +53,6 @@ public class MainMenuManager : MonoBehaviour
 
         FetchAllSongsData();
 
-        // --- Add Mode Button Listeners ---
         if (easyModeButton != null)
         {
             easyModeButton.onClick.AddListener(SelectEasyMode);
@@ -71,8 +70,6 @@ public class MainMenuManager : MonoBehaviour
         {
              Debug.LogError("MasteryModeButton not assigned in MainMenuManager!");
         }
-
-        // -----------------------------------
     }
 
     void OnDestroy()

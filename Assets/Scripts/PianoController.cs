@@ -10,7 +10,6 @@ using UnityEngine.SceneManagement;
 
 public class PianoController : MonoBehaviour
 {
-    // Enum for playback modes
     public enum PlaybackMode
     {
         Automatic,
@@ -18,7 +17,6 @@ public class PianoController : MonoBehaviour
         Mastery
     }
 
-    // Public references
     public Keyboard keyboard;
     public float playbackSpeed = 1.0f;
     public Color upcomingNoteHighlightColor = Color.yellow;
@@ -27,19 +25,16 @@ public class PianoController : MonoBehaviour
     public Color playedNoteColor = Color.gray;
     public float masteryIdleDuration = 5.0f;
 
-    // Internal state variables
     private Coroutine playbackCoroutine;
     private List<Note> songNotes;
     private TempoMap tempoMap;
     private int currentNoteIndex = 0;
     private PlaybackMode currentMode;
 
-    // State for Interactive Easy Mode
     private HashSet<int> currentStepNotesSet = new HashSet<int>();
     private List<int> orderedStepNotes = new List<int>();
     private bool waitingForInput = false;
 
-    // State for Mastery Mode
     private float lastCorrectInputTime;
     private bool isHintActive = false;
     private HashSet<int> currentMasteryStepNotes = new HashSet<int>();
@@ -168,7 +163,6 @@ public class PianoController : MonoBehaviour
         currentMasteryStepNotes.Clear();
     }
 
-    // --- Time Conversion Helper ---
     private double GetNoteStartTimeInSeconds(Note note)
     {
         return note.TimeAs<MetricTimeSpan>(tempoMap).TotalSeconds;
@@ -179,7 +173,6 @@ public class PianoController : MonoBehaviour
         return note.LengthAs<MetricTimeSpan>(tempoMap).TotalSeconds;
     }
 
-    // --- Automatic Playback Logic ---
     IEnumerator PlaySongAutomaticallyCoroutine()
     {
         float playbackStartTime = Time.time;
@@ -243,7 +236,6 @@ public class PianoController : MonoBehaviour
         StopPlayback();
     }
 
-    // --- Interactive Easy Mode Logic ---
     IEnumerator InteractiveEasyModeCoroutine()
     {
         waitingForInput = false;
@@ -340,7 +332,6 @@ public class PianoController : MonoBehaviour
         }
     }
 
-    // --- Mastery Mode Logic ---
     IEnumerator MasteryModeCoroutine()
     {
         lastCorrectInputTime = Time.time;
@@ -452,12 +443,10 @@ public class PianoController : MonoBehaviour
         }
     }
 
-    // --- Shared Input Handling ---
     void OnKeyboardInput(int noteNumber)
     {
         if (keyboard == null) return;
 
-        // --- Interactive Easy Mode Input ---
         if (currentMode == PlaybackMode.InteractiveEasy && waitingForInput)
         {
             if (orderedStepNotes.Count > 0)
@@ -503,7 +492,6 @@ public class PianoController : MonoBehaviour
                 Debug.LogWarning($"Easy Mode: Input {noteNumber} received while waiting, but orderedStepNotes was empty.");
             }
         }
-        // --- Mastery Mode Input ---
         else if (currentMode == PlaybackMode.Mastery)
         {
             if (currentMasteryStepNotes.Count == 0)
@@ -539,7 +527,6 @@ public class PianoController : MonoBehaviour
         }
     }
 
-    // --- Method to Handle Song Completion API Call ---
     void HandleSongCompletion()
     {
         if (songCompleted)
