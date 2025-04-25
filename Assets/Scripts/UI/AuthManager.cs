@@ -1,8 +1,8 @@
 using UnityEngine;
-using UnityEngine.UI; // Required for Button
-using TMPro;        // Required for TextMeshPro elements
-using ApiData;      // Required for AuthResponse
-using UnityEngine.SceneManagement; // Optional: For scene switching after login
+using UnityEngine.UI;
+using TMPro;
+using ApiData;
+using UnityEngine.SceneManagement;
 
 public class AuthManager : MonoBehaviour
 {
@@ -26,21 +26,17 @@ public class AuthManager : MonoBehaviour
     public TextMeshProUGUI feedbackTextRegister;
 
     [Header("Navigation (Optional)")]
-    public string sceneToLoadOnSuccess = "MainMenuScene"; // Example: Name of the scene to load after successful login/register
+    public string sceneToLoadOnSuccess = "MainMenuScene";
 
     void Start()
     {
-        // Ensure Login panel is active, Register is inactive at start
         SwitchToLoginPanel(); 
 
-        // Add listeners to buttons
         loginButton.onClick.AddListener(AttemptLogin);
         registerButton.onClick.AddListener(AttemptRegister);
 
-        // Add listeners for the switch buttons (if they are assigned)
         if (switchToRegisterButton != null)
         {
-            // This button should be on the Login Panel and switch TO the Register Panel
             switchToRegisterButton.onClick.AddListener(SwitchToRegisterPanel); 
         }
         else
@@ -50,7 +46,6 @@ public class AuthManager : MonoBehaviour
 
         if (switchToLoginButton != null)
         {
-            // This button should be on the Register Panel and switch TO the Login Panel
             switchToLoginButton.onClick.AddListener(SwitchToLoginPanel);
         }
          else
@@ -97,7 +92,6 @@ public class AuthManager : MonoBehaviour
         string password = passwordInputRegister.text;
         string confirmPassword = confirmPasswordInputRegister.text;
 
-        // Basic Validation
         if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
         {
             ShowRegisterError("Username and Password are required.");

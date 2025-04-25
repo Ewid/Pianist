@@ -39,16 +39,7 @@ public class SoundGeneration : MonoBehaviour
                     if (!noteToClipMap.ContainsKey(noteNumber))
                     {
                         noteToClipMap.Add(noteNumber, clip);
-                        Debug.Log($"Mapped note {noteNumber} to clip {clip.name}");
                     }
-                    else
-                    {
-                        Debug.LogWarning($"Duplicate note number {noteNumber} found for clip {clip.name}. Using the first one found.");
-                    }
-                }
-                else
-                {
-                    Debug.LogWarning($"Could not parse note number from clip name: {clip.name}");
                 }
             }
             catch (System.Exception ex)
@@ -68,16 +59,6 @@ public class SoundGeneration : MonoBehaviour
         {
             Debug.LogWarning($"No audio clip found for note number: {keyNumber}");
         }
-    }
-
-    public void onKeyOff(int keyNumber)
-    {
-
-    }
-
-    void Update()
-    {
-
     }
 
 }
