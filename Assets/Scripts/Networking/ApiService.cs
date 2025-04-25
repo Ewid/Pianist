@@ -28,8 +28,8 @@ public class ApiService : MonoBehaviour
             return _instance;
         }
     }
-
-    private string baseUrl = "http://192.168.50.171:3000"; 
+    //192.168.50.171
+    private string baseUrl = "http://localhost:3000"; 
     private const string AuthTokenKey = "authToken"; 
 
     public UserData CurrentUser { get; private set; }
@@ -128,7 +128,7 @@ public class ApiService : MonoBehaviour
         if (statusCode == 401 || statusCode == 403)
         {
             ClearToken();
-            onError?.Invoke("Authentication failed or token expired. Please log in again.");
+            onError?.Invoke("Wrong username or password. Please try again.");
         }
         else
         {
@@ -153,7 +153,7 @@ public class ApiService : MonoBehaviour
             }
             else
             {
-                 onError?.Invoke("Received invalid response from server during registration.");
+                 onError?.Invoke("Error during registration. Please try again.");
             }
         }).Catch(err => HandleError(err, onError));
     }
@@ -174,7 +174,7 @@ public class ApiService : MonoBehaviour
             }
              else
             {
-                 onError?.Invoke("Received invalid response from server during login.");
+                 onError?.Invoke("Wrong username or password. Please try again.");
             }
         }).Catch(err => HandleError(err, onError));
     }
@@ -195,7 +195,7 @@ public class ApiService : MonoBehaviour
             }
              else
             {
-                 onError?.Invoke("Received invalid song list from server.");
+                 onError?.Invoke("Error fetching songs. Please try again.");
             }
         }).Catch(err => HandleError(err, onError));
     }
@@ -215,7 +215,7 @@ public class ApiService : MonoBehaviour
              }
              else
             {
-                 onError?.Invoke("Received invalid profile data from server.");
+                 onError?.Invoke("Error fetching profile data. Please try again.");
             }
          }).Catch(err => HandleError(err, onError));
     }
@@ -234,7 +234,7 @@ public class ApiService : MonoBehaviour
              }
              else
             {
-                 onError?.Invoke("Received invalid progress data after update.");
+                 onError?.Invoke("Error updating progress. Please try again.");
             }
         }).Catch(err => HandleError(err, onError));
     }
@@ -255,7 +255,7 @@ public class ApiService : MonoBehaviour
                 }
                 else
                 {
-                    onError?.Invoke("Failed to parse progress data.");
+                    onError?.Invoke("Error fetching progress data. Please try again.");
                 }
             }
             else
@@ -287,7 +287,7 @@ public class ApiService : MonoBehaviour
              }
              else
             {
-                 onError?.Invoke("Received invalid progress data for song.");
+                 onError?.Invoke("Error fetching progress data. Please try again.");
             }
         }).Catch(err => HandleError(err, onError));
     }
