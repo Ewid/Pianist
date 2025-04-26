@@ -29,7 +29,8 @@ public class ApiService : MonoBehaviour
         }
     }
     //192.168.50.171
-    private string baseUrl = "http://192.168.50.171:3000"; 
+    //192.168.137.185
+    private string baseUrl = "http://192.168.137.185:3000"; 
     private const string AuthTokenKey = "authToken"; 
 
     public UserData CurrentUser { get; private set; }
